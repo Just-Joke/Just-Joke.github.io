@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品反馈表单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .feedback-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .feedback-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .feedback-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .feedback-form input[type="text"],
+        .feedback-form input[type="email"],
+        .feedback-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .feedback-form input[type="radio"] {
+            margin-right: 5px;
+        }
+        .feedback-form .rating {
+            margin-bottom: 15px;
+        }
+        .feedback-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .feedback-form button:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <form class="feedback-form" id="feedbackForm">
+        <h2>产品反馈</h2>
+
+        <div class="error-message" id="error-message"></div>
+
+        <label for="name">用户名:</label>
+        <input type="text" id="name" name="name" placeholder="请输入您的姓名">
+
+        <label for="email">邮箱:</label>
+        <input type="email" id="email" name="email" placeholder="请输入您的邮箱">
+
+        <label for="feedback">反馈内容:</label>
+        <textarea id="feedback" name="feedback" rows="4" placeholder="请输入您的反馈"></textarea>
+
+        <label for="rating">评分:</label>
+        <div class="rating">
+            <input type="radio" id="rating1" name="rating" value="1"> 1
+            <input type="radio" id="rating2" name="rating" value="2"> 2
+            <input type="radio" id="rating3" name="rating" value="3"> 3
+            <input type="radio" id="rating4" name="rating" value="4"> 4
+            <input type="radio" id="rating5" name="rating" value="5"> 5
+        </div>
+
+        <button type="submit">提交</button>
+    </form>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交
+
+            // 获取表单数据
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var feedback = document.getElementById('feedback').value;
+            var rating = document.querySelector('input[name="rating"]:checked');
+
+            var errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'none';
+            errorMessage.innerHTML = '';
+
+            // 验证表单
+            if (name.trim() === '') {
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML += '姓名不能为空。<br>';
+            }
+
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML += '请输入有效的邮箱地址。<br>';
+            }
+
+            if (!rating) {
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML += '请为产品评分。<br>';
+            }
+
+            // 如果没有错误信息，则提交成功（无实际提交功能）
+            if (errorMessage.innerHTML === '') {
+                alert('提交成功！');
+                // 可以清空表单或重置表单
+                document.getElementById('feedbackForm').reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
